@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "EventSourcing\EventSourcing.csproj", "{86FAA614-67EA-43D9-9F39-CFDDA6BBD70A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.Tests", "EventSourcing.Tests\EventSourcing.Tests.csproj", "{D365E478-5D92-4B09-AA30-CDE7BE7E77B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{38513C4B-FFC2-498A-AFD3-2B44F5B57B8B}"
+ProjectSection(SolutionItems) = preProject
+	appveyor.yml = appveyor.yml
+	README.md = README.md
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86FAA614-67EA-43D9-9F39-CFDDA6BBD70A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FAA614-67EA-43D9-9F39-CFDDA6BBD70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FAA614-67EA-43D9-9F39-CFDDA6BBD70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FAA614-67EA-43D9-9F39-CFDDA6BBD70A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D365E478-5D92-4B09-AA30-CDE7BE7E77B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D365E478-5D92-4B09-AA30-CDE7BE7E77B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D365E478-5D92-4B09-AA30-CDE7BE7E77B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D365E478-5D92-4B09-AA30-CDE7BE7E77B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
