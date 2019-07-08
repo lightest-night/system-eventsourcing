@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using LightestNight.System.EventSourcing.Dispatch;
-using LightestNight.System.Utilities.Generators;
 
 namespace LightestNight.System.EventSourcing.Domain
 {
