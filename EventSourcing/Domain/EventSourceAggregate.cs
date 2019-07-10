@@ -8,6 +8,8 @@ namespace LightestNight.System.EventSourcing.Domain
     {
         private readonly List<IEventSourceEvent> _uncommittedEvents = new List<IEventSourceEvent>();
 
+        protected EventSourceAggregate(){}
+        
         public EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
         {
             foreach (var @event in events)
