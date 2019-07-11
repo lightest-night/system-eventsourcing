@@ -22,6 +22,15 @@ namespace LightestNight.System.EventSourcing.Domain
         /// <inheritdoc cref="IEventSourceAggregate.Version" />
         public long Version { get; private set; }
 
+        /// <summary>
+        /// Denotes whether the Aggregate has been instantiated with no events.
+        /// </summary>
+        /// <remarks>
+        /// Think of this as null. The aggregate will only be in this state if it's been retrieved but no events have been processed. That's basically
+        /// non existent
+        /// </remarks>
+        public bool IsRaw => Version == 0;
+
         /// <inheritdoc cref="IEventSourceAggregate.GetUncommittedEvents" />
         public IEnumerable<IEventSourceEvent> GetUncommittedEvents()
             => _uncommittedEvents;
