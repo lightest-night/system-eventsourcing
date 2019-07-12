@@ -25,7 +25,6 @@ namespace LightestNight.System.EventSourcing.Observers
             {
                 WireEventRuleMappers(assembly, services);
                 WireEventRules(assembly, services);
-                WireObserverOrchestrators(assembly, services);
                 WireEventObservers(assembly, services);
             });
 
@@ -59,17 +58,6 @@ namespace LightestNight.System.EventSourcing.Observers
             var eventRuleType = typeof(IEventRule);
             var eventRules = assembly.GetInstancesOfInterface(eventRuleType);
             Parallel.ForEach(eventRules, eventRule => { services.AddTransient(eventRuleType, eventRule); });
-        }
-        
-        private static void WireObserverOrchestrators(Assembly assembly, IServiceCollection services)
-        {
-            var observerType = typeof(IObserverOrchestrator<,>);
-            var observers = assembly
-                .GetTypes()
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == observerType))
-                .ToArray();
-
-            Parallel.ForEach(observers, observer => { services.AddTransient(typeof(IHostedService), observer); });
         }
 
         private static void WireEventObservers(Assembly assembly, IServiceCollection services)
