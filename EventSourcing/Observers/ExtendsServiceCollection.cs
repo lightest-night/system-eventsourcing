@@ -23,7 +23,6 @@ namespace LightestNight.System.EventSourcing.Observers
 
             Parallel.ForEach(assemblies, assembly =>
             {
-                WireEventRuleMappers(assembly, services);
                 WireEventRules(assembly, services);
                 WireEventObservers(assembly, services);
             });
@@ -31,28 +30,6 @@ namespace LightestNight.System.EventSourcing.Observers
             return services;
         }
 
-        private static void WireEventRuleMappers(Assembly assembly, IServiceCollection services)
-        {
-            var eventRuleMapperType = typeof(IEventRuleMapper<>);
-            var mappers = assembly
-                .GetTypes()
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == eventRuleMapperType))
-                .ToArray();
-
-            Parallel.ForEach(mappers, mapper =>
-            {
-                var mapperTypes = mapper.GetInterfaces().FirstOrDefault(i => i.GetGenericTypeDefinition() == eventRuleMapperType)
-                    ?.GenericTypeArguments;
-
-                if (mapperTypes.IsNullOrEmpty())
-                    return;
-
-                // ReSharper disable once AssignNullToNotNullAttribute - IsNullOrEmpty checks for null
-                var mapperInstanceType = eventRuleMapperType.MakeGenericType(mapperTypes);
-                services.AddTransient(mapperInstanceType, mapper);
-            });
-        }
-        
         private static void WireEventRules(Assembly assembly, IServiceCollection services)
         {
             var eventRuleType = typeof(IEventRule);
