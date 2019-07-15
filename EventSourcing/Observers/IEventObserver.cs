@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using LightestNight.System.EventSourcing.Domain;
 
 namespace LightestNight.System.EventSourcing.Observers
@@ -11,12 +12,12 @@ namespace LightestNight.System.EventSourcing.Observers
         /// Gets the current position that this Observer is at
         /// </summary>
         /// <returns>An instance of <see cref="StreamPosition" /></returns>
-        StreamPosition GetCurrentPosition();
+        Task<StreamPosition> GetCurrentPosition();
 
         /// <summary>
         /// Sets the current position this Observer is at
         /// </summary>
         /// <param name="position">The <see cref="StreamPosition" /> to set</param>
-        void SetCurrentPosition(StreamPosition position);
+        Task SetCurrentPosition(StreamPosition position);
     }
 }
