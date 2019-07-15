@@ -16,7 +16,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             var sut = new StreamPosition(10, 20);
             
             // Act
-            var result = sut.IsGreater(commit, prepare);
+            var result = sut > new StreamPosition(commit, prepare);
             
             // Assert
             result.ShouldBeTrue();
@@ -32,7 +32,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             var sut = new StreamPosition(10, 20);
             
             // Act
-            var result = sut.IsGreater(commit, prepare);
+            var result = sut > new StreamPosition(commit, prepare);
             
             // Assert
             result.ShouldBeFalse();
@@ -48,7 +48,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             var sut = new StreamPosition(50, 75);
             
             // Act
-            var result = sut.IsLower(commit, prepare);
+            var result = sut < new StreamPosition(commit, prepare);
             
             // Assert
             result.ShouldBeTrue();
@@ -64,10 +64,23 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             var sut = new StreamPosition(50, 75);
             
             // Act
-            var result = sut.IsLower(commit, prepare);
+            var result = sut < new StreamPosition(commit, prepare);
             
             // Assert
             result.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Should_Return_True_When_Equal()
+        {
+            // Arrange
+            var sut = new StreamPosition(50, 75);
+            
+            // Act
+            var result = sut == new StreamPosition(50, 75);
+            
+            // Assert
+            result.ShouldBeTrue();
         }
     }
 }
