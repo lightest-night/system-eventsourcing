@@ -12,5 +12,11 @@ namespace LightestNight.System.EventSourcing.Observers
         /// </summary>
         /// <returns>An instance of <see cref="StreamPosition" /></returns>
         StreamPosition GetCurrentPosition();
+
+        /// <summary>
+        /// Sets the current position this Observer is at
+        /// </summary>
+        /// <param name="position">The <see cref="StreamPosition" /> to set</param>
+        void SetCurrentPosition(StreamPosition position);
     }
 }
