@@ -35,23 +35,22 @@ namespace LightestNight.System.EventSourcing.Domain
 
         public static bool operator >(StreamPosition operand1, StreamPosition operand2)
         {
-            var result = operand2.CompareTo(operand1);
-            return result == 1;
+            return operand1.CompareTo(operand2) == 1;
         }
 
         public static bool operator <(StreamPosition operand1, StreamPosition operand2)
         {
-            return operand2.CompareTo(operand1) == -1;
+            return operand1.CompareTo(operand2) == -1;
         }
 
         public static bool operator >=(StreamPosition operand1, StreamPosition operand2)
         {
-            return operand2.CompareTo(operand1) >= 0;
+            return operand1.CompareTo(operand2) >= 0;
         }
 
         public static bool operator <=(StreamPosition operand1, StreamPosition operand2)
         {
-            return operand2.CompareTo(operand1) <= 0;
+            return operand1.CompareTo(operand2) <= 0;
         }
 
         public static bool operator ==(StreamPosition operand1, StreamPosition operand2)

@@ -7,9 +7,9 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
     public class StreamPositionTests
     {
         [Theory]
-        [InlineData(10, 25)]
-        [InlineData(15, 20)]
-        [InlineData(15, 25)]
+        [InlineData(-1, -1)]
+        [InlineData(10, 15)]
+        [InlineData(5, 20)]
         public void Should_Return_True_When_Greater(long commit, long prepare)
         {
             // Arrange
@@ -23,9 +23,9 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         }
 
         [Theory]
-        [InlineData(10, 10)]
-        [InlineData(9, 25)]
-        [InlineData(5, 5)]
+        [InlineData(10, 30)]
+        [InlineData(15, 20)]
+        [InlineData(10, 20)]
         public void Should_Return_False_When_Not_Greater(long commit, long prepare)
         {
             // Arrange
@@ -39,9 +39,9 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         }
 
         [Theory]
-        [InlineData(50, 70)]
-        [InlineData(40, 80)]
-        [InlineData(40, 70)]
+        [InlineData(50, 80)]
+        [InlineData(65, 75)]
+        [InlineData(65, 85)]
         public void Should_Return_True_When_Lower(long commit, long prepare)
         {
             // Arrange
@@ -56,8 +56,8 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         
         [Theory]
         [InlineData(50, 75)]
-        [InlineData(60, 80)]
-        [InlineData(50, 77)]
+        [InlineData(45, 75)]
+        [InlineData(50, 60)]
         public void Should_Return_False_When_Not_Lower(long commit, long prepare)
         {
             // Arrange
