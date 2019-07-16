@@ -21,6 +21,6 @@ namespace LightestNight.System.EventSourcing.Observers
         /// </summary>
         /// <param name="position">The <see cref="StreamPosition" /> to set</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> to use during the request</param>
-        Task SetCurrentPosition(StreamPosition position, CancellationToken cancellationToken);
+        Task SetCurrentPosition(StreamPosition position, CancellationToken cancellationToken = default);
     }
 }
