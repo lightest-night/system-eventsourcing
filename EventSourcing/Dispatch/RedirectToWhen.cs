@@ -8,9 +8,6 @@ namespace LightestNight.System.EventSourcing.Dispatch
 {
     public static class RedirectToWhen
     {
-        //private const string InternalPreserveStackTraceMethodName = "InternalPreserveStackTrace";
-        //private const string WhenMethodName = "When";
-
         private static readonly MethodInfo InternalPreserveStackTraceMethod =
             typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 

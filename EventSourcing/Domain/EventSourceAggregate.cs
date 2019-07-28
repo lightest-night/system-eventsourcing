@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LightestNight.System.EventSourcing.Dispatch;
 
 namespace LightestNight.System.EventSourcing.Domain
@@ -10,9 +11,9 @@ namespace LightestNight.System.EventSourcing.Domain
 
         protected EventSourceAggregate(){}
         
-        public EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
+        protected EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
         {
-            foreach (var @event in events)
+            foreach (var @event in events ?? Enumerable.Empty<IEventSourceEvent>())
                 Apply(@event);
         }
 
