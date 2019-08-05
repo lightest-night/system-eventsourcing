@@ -37,15 +37,15 @@ namespace LightestNight.System.EventSourcing.Observers
 
         private static void WireEventObservers(Assembly assembly, IServiceCollection services)
         {
-            var eventObservers = assembly.GetInstancesOfInterface<IEventObserver>();
-            Parallel.ForEach(eventObservers, eventObserver => services.AddTransient(typeof(IEventObserver), eventObserver));
+            var eventObservers = assembly.GetInstancesOfInterface(typeof(IEventObserver<>));
+            Parallel.ForEach(eventObservers, eventObserver => services.AddTransient(typeof(IEventObserver<>), eventObserver));
 
             WireObserverCache(services);
         }
 
         private static void WireObserverCache(IServiceCollection services)
         {
-            services.AddSingleton(serviceProvider => serviceProvider.GetServices<IEventObserver>().Select(o => new
+            services.AddSingleton(serviceProvider => serviceProvider.GetServices(typeof(IEventObserver<>)).Select(o => new
                 {
                     Observer = o,
                     Type = o.GetType()
