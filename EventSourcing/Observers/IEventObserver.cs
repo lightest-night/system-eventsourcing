@@ -7,12 +7,12 @@ namespace LightestNight.System.EventSourcing.Observers
     /// <summary>
     /// An interface to mark a class as an event observer
     /// </summary>
-    public interface IEventObserver<TSubscriber>
+    public interface IEventObserver
     {
         /// <summary>
         /// The observers subscriber object
         /// </summary>
-        TSubscriber Subscriber { get; set; }
+        EventSubscriber Subscriber { get; }
         
         /// <summary>
         /// Gets the current position that this Observer is at
