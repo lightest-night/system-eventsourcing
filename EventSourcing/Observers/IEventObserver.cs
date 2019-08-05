@@ -22,19 +22,5 @@ namespace LightestNight.System.EventSourcing.Observers
         /// <param name="position">The <see cref="StreamPosition" /> to set</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> to use during the request</param>
         Task SetCurrentPosition(StreamPosition position, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets the current status of this Observer
-        /// </summary>
-        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> to use during the request</param>
-        /// <returns>An instance of <see cref="ObserverStatus" /></returns>
-        Task<ObserverStatus> GetStatus(CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Sets the current status of this Observer
-        /// </summary>
-        /// <param name="status">The <see cref="ObserverStatus" /> to set</param>
-        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> to use during the request</param>
-        Task SetStatus(ObserverStatus status, CancellationToken cancellationToken = default);
     }
 }
