@@ -29,10 +29,7 @@ namespace LightestNight.System.EventSourcing.Domain
         /// </remarks>
         public bool IsRaw => Version == 0;
         
-        /// <summary>
-        /// Takes an enumerable of <see cref="IEventSourceEvent" /> and applies them all
-        /// </summary>
-        /// <param name="events">The events to apply</param>
+        /// <inheritdoc cref="IEventSourceAggregate.Apply" />
         public void Apply(IEnumerable<IEventSourceEvent> events)
         {
             var enumeratedEvents = events as IEventSourceEvent[] ?? events.ToArray();
