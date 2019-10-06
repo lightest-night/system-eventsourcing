@@ -8,7 +8,7 @@ using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Domain
 {
-    public class EventSourceAggregate : IEventSourceAggregate
+    public abstract class EventSourceAggregate : IEventSourceAggregate
     {
         private readonly List<IEventSourceEvent> _uncommittedEvents = new List<IEventSourceEvent>();
 
@@ -26,9 +26,8 @@ namespace LightestNight.System.EventSourcing.Domain
         /// non existent
         /// </remarks>
         public bool IsRaw => Version == 0;
-        
-        /// <inheritdoc cref="IEventSourceAggregate.Apply" />
-        public void Apply(IEnumerable<IEventSourceEvent> events)
+
+        protected EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
         {
             var enumeratedEvents = events as IEventSourceEvent[] ?? events.ToArray();
             

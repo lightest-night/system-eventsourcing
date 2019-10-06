@@ -16,12 +16,6 @@ namespace LightestNight.System.EventSourcing.Domain
         long Version { get; }
 
         /// <summary>
-        /// Takes an enumerable of <see cref="IEventSourceEvent" /> and applies them all
-        /// </summary>
-        /// <param name="events">The events to apply</param>
-        void Apply(IEnumerable<IEventSourceEvent> events);
-
-        /// <summary>
         /// Gets any uncommitted events that have been raised within this Aggregate
         /// </summary>
         /// <returns>A collection of events</returns>
