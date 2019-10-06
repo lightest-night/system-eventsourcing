@@ -11,8 +11,6 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
     {
         private class TestAggregate : EventSourceAggregate
         {
-            public TestAggregate(IEnumerable<IEventSourceEvent> events) : base(events) {}
-            
             public void DoSomething()
             {
                 Publish(new SomethingWasDone(Guid.NewGuid()));
@@ -29,7 +27,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             public Guid Id { get; set; }
         }
         
-        private readonly TestAggregate _sut = new TestAggregate(Enumerable.Empty<IEventSourceEvent>());
+        private readonly TestAggregate _sut = new TestAggregate();
 
         [Fact]
         public void Should_Add_Event_To_UncommittedEvents()
