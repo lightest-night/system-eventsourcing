@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LightestNight.System.EventSourcing.Dispatch;
+// ReSharper disable MemberCanBeProtected.Global
 
 namespace LightestNight.System.EventSourcing.Domain
 {
@@ -11,7 +12,7 @@ namespace LightestNight.System.EventSourcing.Domain
 
         protected EventSourceAggregate(){}
         
-        protected EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
+        public EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
         {
             foreach (var @event in events ?? Enumerable.Empty<IEventSourceEvent>())
                 Apply(@event);
