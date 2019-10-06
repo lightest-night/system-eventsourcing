@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LightestNight.System.EventSourcing.Dispatch;
+using LightestNight.System.Utilities.Extensions;
+
 // ReSharper disable MemberCanBeProtected.Global
 
 namespace LightestNight.System.EventSourcing.Domain
@@ -12,12 +14,6 @@ namespace LightestNight.System.EventSourcing.Domain
 
         protected EventSourceAggregate(){}
         
-        public EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
-        {
-            foreach (var @event in events ?? Enumerable.Empty<IEventSourceEvent>())
-                Apply(@event);
-        }
-
         /// <inheritdoc cref="IEventSourceAggregate.Id" />
         public Guid Id { get; set; }
         
@@ -32,6 +28,21 @@ namespace LightestNight.System.EventSourcing.Domain
         /// non existent
         /// </remarks>
         public bool IsRaw => Version == 0;
+        
+        /// <summary>
+        /// Takes an enumerable of <see cref="IEventSourceEvent" /> and applies them all
+        /// </summary>
+        /// <param name="events">The events to apply</param>
+        public void Apply(IEnumerable<IEventSourceEvent> events)
+        {
+            var enumeratedEvents = events as IEventSourceEvent[] ?? events.ToArray();
+            
+            if (enumeratedEvents.IsNullOrEmpty())
+                return;
+            
+            foreach (var @event in enumeratedEvents)
+                Apply(@event);
+        }
 
         /// <inheritdoc cref="IEventSourceAggregate.GetUncommittedEvents" />
         public IEnumerable<IEventSourceEvent> GetUncommittedEvents()
