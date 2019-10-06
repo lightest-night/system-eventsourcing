@@ -12,8 +12,6 @@ namespace LightestNight.System.EventSourcing.Domain
     {
         private readonly List<IEventSourceEvent> _uncommittedEvents = new List<IEventSourceEvent>();
 
-        protected EventSourceAggregate(){}
-        
         /// <inheritdoc cref="IEventSourceAggregate.Id" />
         public Guid Id { get; set; }
         
