@@ -26,6 +26,8 @@ namespace LightestNight.System.EventSourcing.Domain
         /// non existent
         /// </remarks>
         public bool IsRaw => Version == 0;
+        
+        protected EventSourceAggregate() {}
 
         protected EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
         {
