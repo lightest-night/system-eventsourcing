@@ -13,7 +13,7 @@ namespace LightestNight.System.EventSourcing.Domain
         /// <summary>
         /// The current version of this Aggregate
         /// </summary>
-        long Version { get; }
+        int Version { get; }
 
         /// <summary>
         /// Gets any uncommitted events that have been raised within this Aggregate

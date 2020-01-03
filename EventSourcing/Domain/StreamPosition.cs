@@ -25,9 +25,6 @@ namespace LightestNight.System.EventSourcing.Domain
             // This instance is greater = 1
             // This instance is equal = 0
             // This instance is smaller = -1
-            if (other == null)
-                return 1;
-
             return Commit == other.Commit
                 ? Prepare.CompareTo(other.Prepare)
                 : Commit.CompareTo(other.Commit);

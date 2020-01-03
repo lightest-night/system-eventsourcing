@@ -26,12 +26,12 @@ namespace LightestNight.System.EventSourcing.Dispatch
         [DebuggerNonUserCode]
         public static void InvokeEventOptional<T>(T instance, object @event)
         {
-            bool TryGetMethod(Type key, out MethodInfo methodInfo)
+            bool TryGetMethod(Type key, out MethodInfo? methodInfo)
             {
                 methodInfo = null;
 
                 var cacheType = typeof(Cache<>);
-                var constructed = cacheType.MakeGenericType(instance.GetType());
+                var constructed = cacheType.MakeGenericType(instance?.GetType());
 
                 return constructed
                            .GetFields()
@@ -47,7 +47,7 @@ namespace LightestNight.System.EventSourcing.Dispatch
 
             try
             {
-                info.Invoke(instance, new[] {@event});
+                info?.Invoke(instance, new[] {@event});
             }
             catch (TargetInvocationException ex)
             {

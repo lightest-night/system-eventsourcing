@@ -7,11 +7,11 @@ namespace LightestNight.System.EventSourcing.Observers
         /// <summary>
         /// The method to be invoked by the observer
         /// </summary>
-        public MethodInfo MethodInfo { get; set; }
+        public MethodInfo? MethodInfo { get; set; }
         
         /// <summary>
         /// The observer itself
         /// </summary>
-        public object Observer { get; set; }
+        public object? Observer { get; set; }
     }
 }

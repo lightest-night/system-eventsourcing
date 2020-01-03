@@ -16,7 +16,7 @@ namespace LightestNight.System.EventSourcing.Domain
         public Guid Id { get; set; }
         
         /// <inheritdoc cref="IEventSourceAggregate.Version" />
-        public long Version { get; private set; }
+        public int Version { get; private set; }
 
         /// <summary>
         /// Denotes whether the Aggregate has been instantiated with no events.
