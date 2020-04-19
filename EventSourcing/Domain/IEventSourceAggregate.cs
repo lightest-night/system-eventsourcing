@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LightestNight.System.EventSourcing.Events;
 
 namespace LightestNight.System.EventSourcing.Domain
 {

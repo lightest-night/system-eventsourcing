@@ -28,9 +28,12 @@ namespace LightestNight.System.EventSourcing.Dispatch
         [DebuggerNonUserCode]
         public static void InvokeEventOptional<T>(T instance, object @event)
         {
+<<<<<<< HEAD
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
             
+=======
+>>>>>>> 1cbb58f... Aggregate Version & Non Nullable Reference Types
             bool TryGetMethod(Type key, out MethodInfo? methodInfo)
             {
                 var cacheType = typeof(Cache<>);

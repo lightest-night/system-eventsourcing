@@ -1,6 +1,6 @@
 using System;
 
-namespace LightestNight.System.EventSourcing
+namespace LightestNight.System.EventSourcing.Events
 {
     public interface IEventSourceEvent
     {

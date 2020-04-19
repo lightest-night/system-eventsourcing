@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LightestNight.System.EventSourcing.Domain;
+using LightestNight.System.EventSourcing.Events;
 using Shouldly;
 using Xunit;
 
