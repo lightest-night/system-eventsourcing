@@ -27,7 +27,8 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// </summary>
         /// <param name="streamName">The name of the stream to catch up</param>
         /// <param name="checkpoint">The current checkpoint</param>
+        /// <param name="eventReceived">Function to invoke when an event is received</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
-        Task CatchSubscriptionUp(string streamName, int checkpoint, CancellationToken cancellationToken = default);
+        Task CatchSubscriptionUp(string streamName, int checkpoint, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
     }
 }
