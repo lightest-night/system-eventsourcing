@@ -29,6 +29,7 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// <param name="checkpoint">The current checkpoint</param>
         /// <param name="eventReceived">Function to invoke when an event is received</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
-        Task CatchSubscriptionUp(string streamName, int checkpoint, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
+        /// <returns>The new value for <paramref name="checkpoint" /></returns>
+        Task<int> CatchSubscriptionUp(string streamName, int checkpoint, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
     }
 }
