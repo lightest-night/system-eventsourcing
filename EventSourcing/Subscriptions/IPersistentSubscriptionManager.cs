@@ -22,5 +22,12 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
         Task CloseSubscription(Guid subscriptionId, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Catches a subscription up to the current point in the stream 
+        /// </summary>
+        /// <param name="streamName">The name of the stream to catch up</param>
+        /// <param name="checkpoint">The current checkpoint</param>
+        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
+        Task CatchSubscriptionUp(string streamName, int checkpoint, CancellationToken cancellationToken = default);
     }
 }
