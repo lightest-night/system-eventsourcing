@@ -11,5 +11,10 @@
         /// When reading an Event Store Stream forward, the maximum amount of events to retrieve per page
         /// </summary>
         public int MaxReadStreamForward { get; set; } = 500;
+
+        /// <summary>
+        /// The amount of events that a subscription needs to be behind before we run a fast forward rather than a subscription
+        /// </summary>
+        public int SubscriptionCheckpointDelta { get; set; } = 50;
     }
 }
