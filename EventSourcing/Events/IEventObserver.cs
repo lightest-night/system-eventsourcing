@@ -12,5 +12,10 @@ namespace LightestNight.System.EventSourcing.Events
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
         /// <typeparam name="TEvent">The type of the event being observed</typeparam>
         Task EventReceived<TEvent>(TEvent @event, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Denotes whether the observer is active, if not, any events received will be ignored
+        /// </summary>
+        bool IsActive { get; }
     }
 }
