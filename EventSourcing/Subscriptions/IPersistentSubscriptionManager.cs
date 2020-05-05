@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,5 +32,13 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
         /// <returns>The new value for <paramref name="checkpoint" /></returns>
         Task<int> CatchSubscriptionUp(string streamName, int checkpoint, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        /// Saves the given checkpoint under the given name
+        /// </summary>
+        /// <param name="checkpoint">The checkpoint to save</param>
+        /// <param name="checkpointName">The name of the checkpoint</param>
+        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
+        Task SaveCheckpoint(int checkpoint, [CallerMemberName] string? checkpointName = default, CancellationToken cancellationToken = default);
     }
 }
