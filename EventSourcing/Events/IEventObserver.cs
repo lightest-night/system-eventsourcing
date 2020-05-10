@@ -1,9 +1,10 @@
-﻿using System.Threading;
+﻿using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LightestNight.System.EventSourcing.Events
 {
-    public interface IEventObserver
+    public interface IEventObserver : INotifyPropertyChanged
     {
         /// <summary>
         /// When an Event is received this function is the one that is invoked to process the event.
