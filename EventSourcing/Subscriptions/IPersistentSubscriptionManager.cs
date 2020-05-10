@@ -35,7 +35,8 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// Saves the global checkpoint
         /// </summary>
         /// <param name="checkpoint">The global checkpoint to set</param>
-        Task SaveGlobalCheckpoint(int checkpoint);
+        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
+        Task SaveGlobalCheckpoint(int checkpoint, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// The current global checkpoint position
