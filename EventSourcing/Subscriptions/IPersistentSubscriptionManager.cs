@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using LightestNight.System.EventSourcing.Events;
 
 namespace LightestNight.System.EventSourcing.Subscriptions
 {
@@ -14,7 +15,7 @@ namespace LightestNight.System.EventSourcing.Subscriptions
         /// <param name="eventReceived">Function to invoke when an event is received</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
         /// <returns>The globally unique identifier of the subscription</returns>
-        Task<Guid> CreateCategorySubscription(string categoryName, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
+        Task<Guid> CreateCategorySubscription(string categoryName, EventReceived eventReceived, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Closes the subscription with the given identifier

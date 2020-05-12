@@ -1,7 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using LightestNight.System.EventSourcing.Events;
 
 namespace LightestNight.System.EventSourcing.Replay
 {
@@ -15,7 +15,7 @@ namespace LightestNight.System.EventSourcing.Replay
         /// <param name="projectionName">The name of the projection that is being replayed</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
         /// <returns>The value of where in the stream the new checkpoint is</returns>
-        Task<long> ReplayProjectionFrom(long? fromCheckpoint, Func<object, CancellationToken, Task> eventReceived, [CallerMemberName] string? projectionName = default, CancellationToken cancellationToken = default);
+        Task<long> ReplayProjectionFrom(long? fromCheckpoint, EventReceived eventReceived, [CallerMemberName] string? projectionName = default, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Replays a stream of events firing the <paramref name="eventReceived" /> function for each
@@ -25,6 +25,6 @@ namespace LightestNight.System.EventSourcing.Replay
         /// <param name="eventReceived">Function to invoke when an event is received</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
         /// <returns>The value of where in the stream the new checkpoint is</returns>
-        Task<int> ReplayProjectionFrom(string streamId, int fromCheckpoint, Func<object, CancellationToken, Task> eventReceived, CancellationToken cancellationToken = default);
+        Task<int> ReplayProjectionFrom(string streamId, int fromCheckpoint, EventReceived eventReceived, CancellationToken cancellationToken = default);
     }
 }

@@ -13,9 +13,8 @@ namespace LightestNight.System.EventSourcing.Events
         /// <param name="position">The position in the stream the received event occurred</param>
         /// <param name="version">The version of the received event</param> 
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
-        /// <typeparam name="TEvent">The type of the event being observed</typeparam>
-        Task EventReceived<TEvent>(TEvent @event, long? position = default, int? version = default, CancellationToken cancellationToken = default);
-
+        Task EventReceived(object @event, long? position = default, int? version = default, CancellationToken cancellationToken = default);
+        
         /// <summary>
         /// Denotes whether the observer is active, if not, any events received will be ignored
         /// </summary>
