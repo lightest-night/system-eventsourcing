@@ -25,5 +25,12 @@ namespace LightestNight.System.EventSourcing.Checkpoints
         /// <typeparam name="TCheckpoint">The Type of the checkpoint to get</typeparam>
         /// <returns>The checkpoint</returns>
         Task<TCheckpoint> GetCheckpoint<TCheckpoint>([CallerMemberName] string? checkpointName = default, CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        /// Clears the checkpoint with the given name
+        /// </summary>
+        /// <param name="checkpointName">The checkpoint name (defaults to the calling member's name)</param>
+        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
+        Task ClearCheckpoint([CallerMemberName] string? checkpointName = default, CancellationToken cancellationToken = default);
     }
 }
