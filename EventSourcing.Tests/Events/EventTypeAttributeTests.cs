@@ -20,7 +20,7 @@ namespace LightestNight.System.EventSourcing.Tests.Events
         { }
 
         [Fact]
-        public void Should_Set_Version_To_0_When_Not_Specifically_Set()
+        public void ShouldSetVersionTo0WhenNotSpecificallySet()
         {
             // Arrange
             var attributeObject = new EventTypeTestClassNoParams();
@@ -34,7 +34,7 @@ namespace LightestNight.System.EventSourcing.Tests.Events
         }
         
         [Fact]
-        public void Version_Should_Be_As_Set()
+        public void VersionShouldBeAsSet()
         {
             // Arrange
             var attributeObject = new EventTypeTestClassVersion10();
@@ -48,7 +48,7 @@ namespace LightestNight.System.EventSourcing.Tests.Events
         }
 
         [Fact]
-        public void Should_Get_Event_Type_From_Attribute()
+        public void ShouldGetEventTypeFromAttribute()
         {
             // Act
             var eventType = EventTypeAttribute.GetEventTypeFrom(typeof(EventTypeGivenEventType));

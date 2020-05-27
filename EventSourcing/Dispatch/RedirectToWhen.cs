@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Dispatch
 {
@@ -26,10 +27,10 @@ namespace LightestNight.System.EventSourcing.Dispatch
         }
 
         [DebuggerNonUserCode]
-        public static void InvokeEventOptional<T>(T instance, object @event)
+        public static void InvokeEventOptional<T>(T instance, object evt)
         {
-            if (instance == null)
-                throw new ArgumentNullException(nameof(instance));
+            instance.ThrowIfNull(nameof(instance));
+            evt.ThrowIfNull(nameof(evt));
             
             bool TryGetMethod(Type key, out MethodInfo? methodInfo)
             {
@@ -44,19 +45,19 @@ namespace LightestNight.System.EventSourcing.Dispatch
                        && methods.TryGetValue(key, out methodInfo);
             }
 
-            var type = @event.GetType();
+            var type = evt.GetType();
             if (!TryGetMethod(type, out var info))
                 // We don't care if this object does not consume the event given, they'll be persisted anyway, right? ;)
                 return;
 
             try
             {
-                info?.Invoke(instance, new[] {@event});
+                info?.Invoke(instance, new[] {evt});
             }
             catch (TargetInvocationException ex)
             {
                 if (InternalPreserveStackTraceMethod != null)
-                    InternalPreserveStackTraceMethod.Invoke(ex.InnerException, new object[0]);
+                    InternalPreserveStackTraceMethod.Invoke(ex.InnerException, Array.Empty<object>());
 
                 throw ex.InnerException ?? ex;
             }

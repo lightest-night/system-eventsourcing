@@ -9,7 +9,7 @@ namespace LightestNight.System.EventSourcing.Tests.Events
     public class EventCollectionTests
     {
         [Fact]
-        public void Should_Get_Correct_EventType()
+        public void ShouldGetCorrectEventType()
         {
             // Arrange
             var types = new Type[]
@@ -28,7 +28,7 @@ namespace LightestNight.System.EventSourcing.Tests.Events
         }
 
         [Fact]
-        public void Should_Get_EventTypes_From_Given_Assemblies()
+        public void ShouldGetEventTypesFromGivenAssemblies()
         {
             // Arrange
             var assembly = Assembly.GetExecutingAssembly();

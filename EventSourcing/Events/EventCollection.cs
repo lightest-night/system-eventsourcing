@@ -16,7 +16,7 @@ namespace LightestNight.System.EventSourcing.Events
                 var typeName = EventTypeAttribute.GetEventTypeFrom(type);
                 var typeVersion = Attributes.GetCustomAttributeValue<EventTypeAttribute, int>(type, attribute => attribute.Version);
 
-                return string.Equals(typeName, name) && version.Equals(typeVersion);
+                return string.Equals(typeName, name, StringComparison.InvariantCultureIgnoreCase) && version.Equals(typeVersion);
             });
 
         public static Type[] GetEventTypes(IEnumerable<Assembly> assemblies)

@@ -33,7 +33,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         private readonly TestAggregate _sut = new TestAggregate(Enumerable.Empty<IEventSourceEvent>());
 
         [Fact]
-        public void Should_Add_Event_To_UncommittedEvents()
+        public void ShouldAddEventToUncommittedEvents()
         {
             // Act
             _sut.DoSomething();
@@ -43,7 +43,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         }
 
         [Fact]
-        public void Should_Bump_Version()
+        public void ShouldBumpVersion()
         {
             // Arrange
             var version = _sut.Version;
@@ -56,7 +56,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
         }
 
         [Fact]
-        public void Should_Clear_UncommittedEvents()
+        public void ShouldClearUncommittedEvents()
         {
             // Arrange
             _sut.DoSomething();

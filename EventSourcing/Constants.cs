@@ -1,6 +1,6 @@
 ﻿namespace LightestNight.System.EventSourcing
 {
-    public class Constants
+    public static class Constants
     {
         public const string SystemStreamPrefix = "@";
         public const string VersionKey = "version";

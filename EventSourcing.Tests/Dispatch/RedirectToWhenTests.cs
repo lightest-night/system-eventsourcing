@@ -15,12 +15,12 @@ namespace LightestNight.System.EventSourcing.Tests.Dispatch
                 RedirectToWhen.InvokeEventOptional(this, new TestEvent());
             }
 
-            private void When(TestEvent @event)
+            private void When(TestEvent evt)
             {
                 WhenCalled = true;
             }
             
-            private void When(WrongTestEvent @event){}
+            private static void When(WrongTestEvent evt){}
         }
 
         private class TestEvent{}
@@ -28,7 +28,7 @@ namespace LightestNight.System.EventSourcing.Tests.Dispatch
         private class WrongTestEvent{}
 
         [Fact]
-        public void Should_Dispatch_To_Correct_Event()
+        public void ShouldDispatchToCorrectEvent()
         {
             // Arrange
             var sut = new TestObject();

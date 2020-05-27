@@ -35,7 +35,7 @@
 
     <ItemGroup>
       <PackageReference Include="LightestNight.System.ServiceResolution" Version="1.1.2" />
-      <PackageReference Include="LightestNight.System.Utilities" Version="1.8.3" />
+      <PackageReference Include="LightestNight.System.Utilities" Version="1.8.4" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.4" />
     </ItemGroup>
