@@ -7,6 +7,6 @@ namespace LightestNight.System.EventSourcing.Events
         /// <summary>
         /// The Globally Unique Identifier of the Aggregate this event is raised for
         /// </summary>
-        Guid Id { get; set; }
+        Guid Id { get; }
     }
 }
