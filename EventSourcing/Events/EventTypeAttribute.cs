@@ -4,7 +4,7 @@ using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Events
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class EventTypeAttribute : Attribute
     {
         public string EventType { get; } = string.Empty;
