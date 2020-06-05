@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: dotnet build -c Release
       - name: Test
-        run: dotnet test --no-build
+        run: dotnet test -c Release --no-build
       - name: Package
         run: dotnet pack -c Release -o ./packages -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
       - name: Store nuget package as artifact
