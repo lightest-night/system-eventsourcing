@@ -35,20 +35,20 @@ jobs:
           name: packages
           path: ./packages/*.nupkg
           
-#  deploy:
-#    name: Deploy to Nuget
-#    needs: build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Download package from build
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: packages
-#      - name: Check directory structure
-#        run: |
-#          ls
-#      - name: Push to Nuget
-#        run: dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
+  deploy:
+    name: Deploy to Nuget
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download package from build
+        uses: actions/download-artifact@v2
+        with:
+          name: packages
+      - name: Check directory structure
+        run: |
+          ls
+      - name: Push to Nuget
+        run: dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
       
         
       
