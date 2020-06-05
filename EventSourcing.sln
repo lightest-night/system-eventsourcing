@@ -11,8 +11,9 @@ EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{FA775BD2-BF1F-4D2B-8161-2D4392FA98D1}"
 ProjectSection(SolutionItems) = preProject
-	.github\workflows\CI.yml = .github\workflows\CI.yml
+	.github\workflows\Release.yml = .github\workflows\Release.yml
 	GitVersion.yml = GitVersion.yml
+	.github\workflows\CI.yml = .github\workflows\CI.yml
 EndProjectSection
 EndProject
 Global
