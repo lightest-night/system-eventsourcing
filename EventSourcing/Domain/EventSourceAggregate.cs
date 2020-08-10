@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LightestNight.System.EventSourcing.Dispatch;
@@ -9,14 +8,14 @@ using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Domain
 {
-    public abstract class EventSourceAggregate : IEventSourceAggregate
+    public abstract class EventSourceAggregate<TId> : IEventSourceAggregate<TId>
     {
-        private readonly List<IEventSourceEvent> _uncommittedEvents = new List<IEventSourceEvent>();
+        private readonly List<EventSourceEvent> _uncommittedEvents = new List<EventSourceEvent>();
 
-        /// <inheritdoc cref="IEventSourceAggregate.Id" />
-        public Guid Id { get; set; }
+        /// <inheritdoc cref="IEventSourceAggregate{TId}.Id" />
+        public TId Id { get; set; } = default!;
         
-        /// <inheritdoc cref="IEventSourceAggregate.Version" />
+        /// <inheritdoc cref="IEventSourceAggregate{TId}.Version" />
         public int Version { get; private set; }
 
         /// <summary>
@@ -30,9 +29,9 @@ namespace LightestNight.System.EventSourcing.Domain
         
         protected EventSourceAggregate() {}
 
-        protected EventSourceAggregate(IEnumerable<IEventSourceEvent> events)
+        protected EventSourceAggregate(IEnumerable<EventSourceEvent> events)
         {
-            var enumeratedEvents = events as IEventSourceEvent[] ?? events.ToArray();
+            var enumeratedEvents = events as EventSourceEvent[] ?? events.ToArray();
             
             if (enumeratedEvents.IsNullOrEmpty())
                 return;
@@ -41,11 +40,11 @@ namespace LightestNight.System.EventSourcing.Domain
                 Apply(@event);
         }
 
-        /// <inheritdoc cref="IEventSourceAggregate.GetUncommittedEvents" />
-        public IEnumerable<IEventSourceEvent> GetUncommittedEvents()
+        /// <inheritdoc cref="IEventSourceAggregate{TId}.GetUncommittedEvents" />
+        public IEnumerable<EventSourceEvent> GetUncommittedEvents()
             => _uncommittedEvents;
 
-        /// <inheritdoc cref="IEventSourceAggregate.ClearUncommittedEvents" />
+        /// <inheritdoc cref="IEventSourceAggregate{TId}.ClearUncommittedEvents" />
         public void ClearUncommittedEvents()
         {
             _uncommittedEvents.Clear();
@@ -55,7 +54,7 @@ namespace LightestNight.System.EventSourcing.Domain
         /// Applies the given event to the Aggregate
         /// </summary>
         /// <param name="e">The event to apply</param>
-        private void Apply(IEventSourceEvent e)
+        private void Apply(EventSourceEvent e)
         {
             Version++;
             RedirectToWhen.InvokeEventOptional(this, e);
@@ -66,7 +65,7 @@ namespace LightestNight.System.EventSourcing.Domain
         /// </summary>
         /// <remarks>Storage of events is an abstract concern and not to do with the Aggregate itself</remarks>
         /// <param name="e">The event to publish</param>
-        protected void Publish(IEventSourceEvent e)
+        protected void Publish(EventSourceEvent e)
         {
             _uncommittedEvents.Add(e);
             Apply(e);
