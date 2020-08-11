@@ -3,12 +3,12 @@ using LightestNight.System.EventSourcing.Events;
 
 namespace LightestNight.System.EventSourcing.Domain
 {
-    public interface IEventSourceAggregate<TId>
+    public interface IEventSourceAggregate
     {
         /// <summary>
         /// The Globally Unique Identifier of this Aggregate
         /// </summary>
-        TId Id { get; set; }
+        object Id { get; set; }
         
         /// <summary>
         /// The current version of this Aggregate

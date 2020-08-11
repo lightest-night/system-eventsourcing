@@ -8,14 +8,14 @@ using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Domain
 {
-    public abstract class EventSourceAggregate<TId> : IEventSourceAggregate<TId>
+    public abstract class EventSourceAggregate : IEventSourceAggregate
     {
         private readonly List<EventSourceEvent> _uncommittedEvents = new List<EventSourceEvent>();
 
-        /// <inheritdoc cref="IEventSourceAggregate{TId}.Id" />
-        public TId Id { get; set; } = default!;
+        /// <inheritdoc cref="IEventSourceAggregate.Id" />
+        public object Id { get; set; } = default!;
         
-        /// <inheritdoc cref="IEventSourceAggregate{TId}.Version" />
+        /// <inheritdoc cref="IEventSourceAggregate.Version" />
         public int Version { get; private set; }
 
         /// <summary>
@@ -40,11 +40,11 @@ namespace LightestNight.System.EventSourcing.Domain
                 Apply(@event);
         }
 
-        /// <inheritdoc cref="IEventSourceAggregate{TId}.GetUncommittedEvents" />
+        /// <inheritdoc cref="IEventSourceAggregate.GetUncommittedEvents" />
         public IEnumerable<EventSourceEvent> GetUncommittedEvents()
             => _uncommittedEvents;
 
-        /// <inheritdoc cref="IEventSourceAggregate{TId}.ClearUncommittedEvents" />
+        /// <inheritdoc cref="IEventSourceAggregate.ClearUncommittedEvents" />
         public void ClearUncommittedEvents()
         {
             _uncommittedEvents.Clear();

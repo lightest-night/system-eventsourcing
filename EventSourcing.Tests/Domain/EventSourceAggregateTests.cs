@@ -10,7 +10,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
 {
     public class EventSourceAggregateTests
     {
-        private class TestAggregate : EventSourceAggregate<Guid>
+        private class TestAggregate : EventSourceAggregate
         {
             public TestAggregate(IEnumerable<EventSourceEvent> events) : base(events){}
             
