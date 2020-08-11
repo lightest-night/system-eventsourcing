@@ -22,5 +22,12 @@ namespace LightestNight.System.EventSourcing.Persistence
         /// <param name="aggregate">The <see cref="IEventSourceAggregate" /> to write</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> needed to marshal the operation</param>
         Task Save(IEventSourceAggregate aggregate, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Parses the <see cref="IEventSourceAggregate" /> instance to determine what the Stream Id should be
+        /// </summary>
+        /// <param name="aggregate">The <see cref="IEventSourceAggregate" /> to parse</param>
+        /// <returns>The Stream Id</returns>
+        string GetStreamId(IEventSourceAggregate aggregate);
     }
 }
