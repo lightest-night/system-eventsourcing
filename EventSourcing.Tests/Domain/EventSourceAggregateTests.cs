@@ -12,7 +12,7 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
     {
         private class TestAggregate : EventSourceAggregate
         {
-            public TestAggregate(IEnumerable<IEventSourceEvent> events) : base(events){}
+            public TestAggregate(IEnumerable<EventSourceEvent> events) : base(events){}
             
             public void DoSomething()
             {
@@ -20,17 +20,17 @@ namespace LightestNight.System.EventSourcing.Tests.Domain
             }
         }
 
-        private class SomethingWasDone : IEventSourceEvent
+        private class SomethingWasDone : EventSourceEvent
         {
             public SomethingWasDone(Guid id)
             {
                 Id = id;
             }
 
-            public Guid Id { get; set; }
+            public Guid Id { get; }
         }
         
-        private readonly TestAggregate _sut = new TestAggregate(Enumerable.Empty<IEventSourceEvent>());
+        private readonly TestAggregate _sut = new TestAggregate(Enumerable.Empty<EventSourceEvent>());
 
         [Fact]
         public void ShouldAddEventToUncommittedEvents()

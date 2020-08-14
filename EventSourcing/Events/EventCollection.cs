@@ -22,8 +22,7 @@ namespace LightestNight.System.EventSourcing.Events
         public static Type[] GetEventTypes(IEnumerable<Assembly> assemblies)
         {
             var events = assemblies.SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type => type.GetCustomAttributes(typeof(EventTypeAttribute), true).Any() &&
-                               typeof(IEventSourceEvent).IsAssignableFrom(type))
+                .Where(type => type.GetCustomAttributes(typeof(EventTypeAttribute), true).Any())
                 .ToArray();
 
             var dupes = GetDupes(events).Where(dupe =>
