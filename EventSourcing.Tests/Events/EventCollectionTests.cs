@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Linq;
 using LightestNight.System.EventSourcing.Events;
 using Shouldly;
 using Xunit;
@@ -9,36 +8,24 @@ namespace LightestNight.System.EventSourcing.Tests.Events
     public class EventCollectionTests
     {
         [Fact]
-        public void ShouldGetCorrectEventType()
+        public void ShouldGetCorrectTypesFromLoadedAssemblies()
         {
-            // Arrange
-            var types = new Type[]
-            {
-                typeof(string),
-                typeof(int),
-                typeof(Guid),
-                typeof(TestEventType)
-            };
-            
-            // Act
-            var type = types.GetEventType("Test", 100);
-            
-            // Assert
-            type?.FullName.ShouldBe(typeof(TestEventType).FullName);
+             // Act
+             var result = EventCollection.EventTypes.ToArray();
+             
+             // Assert
+             result.ShouldContain(typeof(TestEventType));
+             result.Length.ShouldBe(1);
         }
 
         [Fact]
-        public void ShouldGetEventTypesFromGivenAssemblies()
+        public void ShouldGetCorrectEventType()
         {
-            // Arrange
-            var assembly = Assembly.GetExecutingAssembly();
-            
             // Act
-            var result = EventCollection.GetEventTypes(new[] {assembly});
+            var type = EventCollection.GetEventType("Test", 100);
             
             // Assert
-            result.ShouldContain(typeof(TestEventType));
-            result.Length.ShouldBe(1);
+            type?.FullName.ShouldBe(typeof(TestEventType).FullName);
         }
     }
 }
