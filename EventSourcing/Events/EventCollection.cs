@@ -6,8 +6,6 @@ using LightestNight.System.Utilities;
 
 namespace LightestNight.System.EventSourcing.Events
 {
-    public delegate Type[] GetEventTypes();
-    
     public static class EventCollection
     {
         public static Type? GetEventType(this IEnumerable<Type> eventTypes, string name, int version)
