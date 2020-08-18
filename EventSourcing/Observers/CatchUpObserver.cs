@@ -55,7 +55,7 @@ namespace LightestNight.System.EventSourcing.Observers
         public abstract Task EventReceived(object @event, long? position = null, int? version = null,
             CancellationToken cancellationToken = default);
 
-        private Task SetCheckpoint(long? checkpoint, CancellationToken cancellationToken = default)
+        protected Task SetCheckpoint(long? checkpoint, CancellationToken cancellationToken = default)
         {
             _checkpoint = checkpoint;
             return _checkpoint.HasValue
