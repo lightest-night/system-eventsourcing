@@ -14,11 +14,12 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 {
     internal class TestCatchUpObserver : CatchUpObserver
     {
-        public TestCatchUpObserver(string checkpointName, ICheckpointManager checkpointManager,
-            IReplayManager replayManager, ILogger logger, GetGlobalCheckpoint getGlobalCheckpoint) : base(
-            checkpointName, checkpointManager, replayManager, logger, getGlobalCheckpoint)
-        {
-        }
+        public TestCatchUpObserver(ICheckpointManager checkpointManager, IReplayManager replayManager,
+            GetGlobalCheckpoint getGlobalCheckpoint)
+            : base(checkpointManager, replayManager, getGlobalCheckpoint)
+        { }
+
+        public override ILogger Logger { get; } = NullLogger.Instance;
 
         public override Task EventReceived(object @event, long? position = null, int? version = null,
             CancellationToken cancellationToken = default)
@@ -49,8 +50,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
                         CancellationToken.None)).ReturnsAsync(Checkpoint);
             
             // Act
-            var sut = new TestCatchUpObserver(CheckpointName, _checkpointManagerMock.Object,
-                _replayManagerMock.Object, NullLogger.Instance,
+            var sut = new TestCatchUpObserver(_checkpointManagerMock.Object, _replayManagerMock.Object,
                 cancellationToken => Task.FromResult((long?) Checkpoint));
             
             // Allow a pause due to the asynchronous nature of setting checkpoints
@@ -64,8 +64,8 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
         public void ShouldSetActiveToFalseIfCheckpointsAreNotEqual()
         {
             // Act
-            var sut = new TestCatchUpObserver(CheckpointName, _checkpointManagerMock.Object, _replayManagerMock.Object,
-                NullLogger.Instance, cancellationToken => Task.FromResult((long?) Checkpoint));
+            var sut = new TestCatchUpObserver(_checkpointManagerMock.Object, _replayManagerMock.Object,
+                cancellationToken => Task.FromResult((long?) Checkpoint));
             
            // Assert
            sut.IsActive.ShouldBeFalse();

@@ -16,8 +16,7 @@ namespace LightestNight.System.EventSourcing.Observers
         private readonly string _checkpointName;
         private readonly ICheckpointManager _checkpointManager;
         private readonly IReplayManager _replayManager;
-        private readonly ILogger _logger;
-
+        
         private static long? _checkpoint;
 
         private bool _isActive;
@@ -36,15 +35,16 @@ namespace LightestNight.System.EventSourcing.Observers
                 NotifyPropertyChanged();
             }
         }
+        
+        public abstract ILogger Logger { get; }
 
-        protected CatchUpObserver(string checkpointName, ICheckpointManager checkpointManager,
-            IReplayManager replayManager, ILogger logger, GetGlobalCheckpoint getGlobalCheckpoint)
+        protected CatchUpObserver(ICheckpointManager checkpointManager, IReplayManager replayManager,
+            GetGlobalCheckpoint getGlobalCheckpoint)
         {
-            _checkpointName = checkpointName ?? throw new ArgumentNullException(nameof(checkpointName));
+            _checkpointName = $"checkpoint-{GetType().Name}";
             _checkpointManager = checkpointManager ?? throw new ArgumentNullException(nameof(checkpointManager));
             _replayManager = replayManager ?? throw new ArgumentNullException(nameof(replayManager));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
+            
             var globalCheckpoint = (getGlobalCheckpoint ?? throw new ArgumentNullException(nameof(getGlobalCheckpoint)))().Result;
             if (globalCheckpoint == _checkpoint)
                 IsActive = true;
@@ -81,7 +81,7 @@ namespace LightestNight.System.EventSourcing.Observers
             IsActive = true;
 
             stopwatch.Stop();
-            _logger.LogInformation($"{projectionName} caught up in {stopwatch.ElapsedMilliseconds}ms");
+            Logger.LogInformation($"{projectionName} caught up in {stopwatch.ElapsedMilliseconds}ms");
         }
     }
 }

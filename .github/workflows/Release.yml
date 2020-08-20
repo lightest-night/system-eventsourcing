@@ -3,10 +3,9 @@ name: Release
 on:
   push:
     branches:
+      - master
       - develop
-    tags:
-      - v*
-      
+
 jobs:
   build:
     name: Build, run tests and package artifacts
@@ -34,7 +33,7 @@ jobs:
         with:
           name: packages
           path: ./packages/*.nupkg
-          
+
   deploy:
     name: Deploy to Nuget
     needs: build
@@ -46,6 +45,3 @@ jobs:
           name: packages
       - name: Push to Nuget
         run: dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_KEY }}
-      
-        
-      
