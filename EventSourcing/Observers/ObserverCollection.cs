@@ -19,7 +19,7 @@ namespace LightestNight.System.EventSourcing.Observers
         /// </summary>
         /// <param name="observer">The observer to register</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
-        public static async Task RegisterObserver(IEventObserver observer, CancellationToken cancellationToken = default)
+        public static async Task RegisterObserverAsync(IEventObserver observer, CancellationToken cancellationToken = default)
         {
             await observer.InitialiseObserver(cancellationToken).ConfigureAwait(false);
             Observers.Add(observer.GetType().FullName, observer);
@@ -34,7 +34,7 @@ namespace LightestNight.System.EventSourcing.Observers
         /// Unregisters an <see cref="IEventObserver" /> from the application
         /// </summary>
         /// <param name="observer">The observer to unregister</param>
-        public static async Task UnregisterObserver(IEventObserver observer)
+        public static async Task UnregisterObserverAsync(IEventObserver observer)
         {
             if (!observer.IsDisposed)
             {
