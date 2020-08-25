@@ -9,6 +9,11 @@ namespace LightestNight.System.EventSourcing.Observers
     {
         private static readonly Dictionary<string, IEventObserver> Observers = new Dictionary<string, IEventObserver>();
 
+        public delegate void EventObserverEventHandler(EventObserverEventArgs e);
+
+        public static event EventObserverEventHandler? EventObserverRegistered;
+        public static event EventObserverEventHandler? EventObserverUnregistered;
+
         /// <summary>
         /// Registers an <see cref="IEventObserver" /> into the application
         /// </summary>
@@ -18,6 +23,11 @@ namespace LightestNight.System.EventSourcing.Observers
         {
             await observer.InitialiseObserver(cancellationToken).ConfigureAwait(false);
             Observers.Add(observer.GetType().FullName, observer);
+            
+            EventObserverRegistered?.Invoke(new EventObserverEventArgs
+            {
+                EventObserver = observer
+            });
         }
 
         /// <summary>
@@ -31,6 +41,13 @@ namespace LightestNight.System.EventSourcing.Observers
                 await observer.DisposeAsync();
                 observer.IsDisposed = true;
             }
+
+            Observers.Remove(observer.GetType().FullName);
+            
+            EventObserverUnregistered?.Invoke(new EventObserverEventArgs
+            {
+                EventObserver = observer
+            });
         }
 
         /// <summary>
