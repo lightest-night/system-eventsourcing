@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace LightestNight.System.EventSourcing.Events
 {
-    public interface IEventObserver : IAsyncDisposable
+    public interface IEventObserver : IAsyncDisposable, IDisposable
     {
         /// <summary>
         /// Denotes whether the observer is active, if not, any events received will be ignored

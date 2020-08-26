@@ -11,6 +11,8 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
         {
             throw new NotImplementedException();
         }
+        
+        public void Dispose(){}
 
         public bool IsActive { get; }
         public bool IsDisposed { get; set; }
