@@ -12,6 +12,11 @@ namespace LightestNight.System.EventSourcing.Events
         bool IsActive { get; }
         
         /// <summary>
+        /// Denotes whether the observer is currently replaying old events
+        /// </summary>
+        bool IsReplaying { get; }
+        
+        /// <summary>
         /// Called by our runtime to initialise the observer and get it ready to work
         /// </summary>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>

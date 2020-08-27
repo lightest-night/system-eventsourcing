@@ -7,15 +7,8 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 {
     public class TestObserver : IEventObserver
     {
-        public ValueTask DisposeAsync()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void Dispose(){}
-
         public bool IsActive { get; }
-        public bool IsDisposed { get; set; }
+        public bool IsReplaying { get; set; }
 
         public Task InitialiseObserver(CancellationToken cancellationToken = default)
             => Task.CompletedTask;
