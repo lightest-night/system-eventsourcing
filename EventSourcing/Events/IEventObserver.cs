@@ -4,18 +4,13 @@ using System.Threading.Tasks;
 
 namespace LightestNight.System.EventSourcing.Events
 {
-    public interface IEventObserver : IAsyncDisposable, IDisposable
+    public interface IEventObserver
     {
         /// <summary>
         /// Denotes whether the observer is active, if not, any events received will be ignored
         /// </summary>
         bool IsActive { get; }
         
-        /// <summary>
-        /// Denotes whether the observer has been disposed
-        /// </summary>
-        bool IsDisposed { get; set; }
-
         /// <summary>
         /// Called by our runtime to initialise the observer and get it ready to work
         /// </summary>

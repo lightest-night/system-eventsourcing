@@ -34,14 +34,8 @@ namespace LightestNight.System.EventSourcing.Observers
         /// Unregisters an <see cref="IEventObserver" /> from the application
         /// </summary>
         /// <param name="observer">The observer to unregister</param>
-        public static async Task UnregisterObserverAsync(IEventObserver observer)
+        public static void UnregisterObserver(IEventObserver observer)
         {
-            if (!observer.IsDisposed)
-            {
-                await observer.DisposeAsync();
-                observer.IsDisposed = true;
-            }
-
             Observers.Remove(observer.GetType().FullName);
             
             EventObserverUnregistered?.Invoke(new EventObserverEventArgs
