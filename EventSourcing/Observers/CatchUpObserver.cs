@@ -14,7 +14,6 @@ namespace LightestNight.System.EventSourcing.Observers
         private readonly ICheckpointManager _checkpointManager;
         private readonly IReplayManager _replayManager;
         private readonly GetGlobalCheckpoint _getGlobalCheckpoint;
-        private static readonly SemaphoreSlim ReplaySemaphore = new SemaphoreSlim(0, 1);
 
         private static long? _checkpoint;
         
@@ -74,20 +73,13 @@ namespace LightestNight.System.EventSourcing.Observers
             var stopwatch = Stopwatch.StartNew();
 
             IsReplaying = true;
-            await ReplaySemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                var currentCheckpoint = await _replayManager
-                    .ReplayProjectionFrom(_checkpoint, EventReceived, projectionName, cancellationToken)
-                    .ConfigureAwait(false);
-                await SetCheckpoint(currentCheckpoint, cancellationToken).ConfigureAwait(false);
-            }
-            finally
-            {
-                ReplaySemaphore.Release();
-                IsReplaying = false;
-                IsActive = true;
-            }
+            var currentCheckpoint = await _replayManager
+                .ReplayProjectionFrom(_checkpoint, EventReceived, projectionName, cancellationToken)
+                .ConfigureAwait(false);
+            await SetCheckpoint(currentCheckpoint, cancellationToken).ConfigureAwait(false);
+
+            IsReplaying = false;
+            IsActive = true;
 
             stopwatch.Stop();
             Logger.LogInformation($"{projectionName} caught up in {stopwatch.ElapsedMilliseconds}ms");
