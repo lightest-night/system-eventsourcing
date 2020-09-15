@@ -27,6 +27,11 @@ namespace LightestNight.System.EventSourcing.Domain
         /// </remarks>
         public bool IsRaw => Version == 0;
         
+        /// <summary>
+        /// Should be used to denote this aggregate was deleted
+        /// </summary>
+        public bool IsDeleted { get; set; }
+        
         protected EventSourceAggregate() {}
 
         protected EventSourceAggregate(IEnumerable<EventSourceEvent> events)
@@ -56,6 +61,9 @@ namespace LightestNight.System.EventSourcing.Domain
         /// <param name="e">The event to apply</param>
         private void Apply(EventSourceEvent e)
         {
+            if (IsDeleted)
+                throw new AggregateDeletedException(this);
+            
             Version++;
             RedirectToWhen.InvokeEventOptional(this, e);
         }
@@ -67,6 +75,9 @@ namespace LightestNight.System.EventSourcing.Domain
         /// <param name="e">The event to publish</param>
         protected void Publish(EventSourceEvent e)
         {
+            if (IsDeleted)
+                throw new AggregateDeletedException(this);
+            
             _uncommittedEvents.Add(e);
             Apply(e);
         }
