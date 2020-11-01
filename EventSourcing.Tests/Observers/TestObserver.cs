@@ -13,7 +13,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
         public Task InitialiseObserver(CancellationToken cancellationToken = default)
             => Task.CompletedTask;
 
-        public Task EventReceived(object evt, long? position = default, int? version = default,
+        public Task EventReceived(EventSourceEvent evt, long? position = default, int? version = default,
             CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

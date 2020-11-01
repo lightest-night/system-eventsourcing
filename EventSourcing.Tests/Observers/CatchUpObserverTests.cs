@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LightestNight.System.EventSourcing.Checkpoints;
+using LightestNight.System.EventSourcing.Events;
 using LightestNight.System.EventSourcing.Observers;
 using LightestNight.System.EventSourcing.Replay;
 using Microsoft.Extensions.Logging;
@@ -21,7 +22,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 
         protected override ILogger Logger { get; } = NullLogger.Instance;
 
-        public override Task EventReceived(object @event, long? position = null, int? version = null,
+        public override Task EventReceived(EventSourceEvent @event, long? position = null, int? version = null,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
     }

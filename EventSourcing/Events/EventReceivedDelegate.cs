@@ -10,6 +10,6 @@ namespace LightestNight.System.EventSourcing.Events
     /// <param name="position">The position in the stream the received event occurred</param>
     /// <param name="version">The version of the received event</param> 
     /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
-    public delegate Task EventReceived(object @event, long? position = default, int? version = default,
+    public delegate Task EventReceived(EventSourceEvent @event, long? position = default, int? version = default,
         CancellationToken cancellationToken = default);
 }
