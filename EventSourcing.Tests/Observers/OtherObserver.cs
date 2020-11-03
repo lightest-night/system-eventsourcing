@@ -1,17 +1,17 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using LightestNight.System.EventSourcing.Events;
-using NotImplementedException = System.NotImplementedException;
 
 namespace LightestNight.System.EventSourcing.Tests.Observers
 {
-    public class TestObserver : IEventObserver
+    public class OtherObserver : IEventObserver
     {
         private readonly int? _index;
         
-        public TestObserver(){}
+        public OtherObserver(){}
         
-        public TestObserver(int index)
+        public OtherObserver(int index)
         {
             _index = index;
         }
@@ -27,8 +27,8 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
         {
             throw new NotImplementedException();
         }
-
+        
         public string GetObserverName()
-            => $"{nameof(TestObserver)}-{_index}";
+            => $"{nameof(OtherObserver)}-{_index}";
     }
 }

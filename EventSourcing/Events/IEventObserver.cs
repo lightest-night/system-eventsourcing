@@ -29,5 +29,15 @@ namespace LightestNight.System.EventSourcing.Events
         /// <param name="version">The version of the received event</param> 
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
         Task EventReceived(EventSourceEvent evt, long? position = default, int? version = default, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the Observer's name
+        /// </summary>
+        /// <returns>The name of the Observer</returns>
+        public string GetObserverName()
+        {
+            var observerType = GetType();
+            return observerType.FullName ?? observerType.GetGenericTypeDefinition().FullName!;
+        }
     }
 }

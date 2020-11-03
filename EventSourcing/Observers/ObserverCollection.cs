@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using LightestNight.System.EventSourcing.Events;
@@ -7,7 +9,7 @@ namespace LightestNight.System.EventSourcing.Observers
 {
     public static class ObserverCollection
     {
-        private static readonly Dictionary<string, IEventObserver> Observers = new Dictionary<string, IEventObserver>();
+        private static readonly ConcurrentDictionary<string, IEventObserver> Observers = new ConcurrentDictionary<string, IEventObserver>();
 
         public delegate void EventObserverEventHandler(EventObserverEventArgs e);
 
@@ -19,10 +21,13 @@ namespace LightestNight.System.EventSourcing.Observers
         /// </summary>
         /// <param name="observer">The observer to register</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> in use to marshall the request</param>
+        /// <exception cref="InvalidOperationException">If the Observer cannot be registered</exception>
         public static async Task RegisterObserverAsync(IEventObserver observer, CancellationToken cancellationToken = default)
         {
             await observer.InitialiseObserver(cancellationToken).ConfigureAwait(false);
-            Observers.Add(observer.GetType().FullName, observer);
+            var observerName = observer.GetObserverName();
+            if (!Observers.TryAdd(observerName, observer))
+                throw new InvalidOperationException($"Could not add {observerName} to the Observers Collection");
             
             EventObserverRegistered?.Invoke(new EventObserverEventArgs
             {
@@ -36,7 +41,7 @@ namespace LightestNight.System.EventSourcing.Observers
         /// <param name="observer">The observer to unregister</param>
         public static void UnregisterObserver(IEventObserver observer)
         {
-            Observers.Remove(observer.GetType().FullName);
+            Observers.Remove(observer.GetObserverName(), out _);
             
             EventObserverUnregistered?.Invoke(new EventObserverEventArgs
             {
