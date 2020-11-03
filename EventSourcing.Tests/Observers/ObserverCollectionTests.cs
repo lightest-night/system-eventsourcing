@@ -46,11 +46,12 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
             observerCollectionArray.Length.ShouldBe(observerCount);
             
             // Check randomly that some of our objects are there
-            var random = new Random();
-            var index1 = random.Next(0, observerCount + 1);
-            var index2 = random.Next(0, observerCount + 1);
-
             var observersArray = observers.ToArray();
+            var random = new Random();
+            var index1 = random.Next(0, observersArray.Length);
+            var index2 = random.Next(0, observersArray.Length);
+
+            
             observerCollectionArray.ShouldContain(observersArray[index1]);
             observerCollectionArray.ShouldContain(observersArray[index2]);
         }
