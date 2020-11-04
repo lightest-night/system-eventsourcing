@@ -3,39 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LightestNight.System.Utilities;
+using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.System.EventSourcing.Events
 {
+    internal class EventSourceEventEqualityComparer : IEqualityComparer<Type>
+    {
+        public bool Equals(Type event1, Type event2)
+        {
+            if (event1 == null && event2 == null)
+                return true;
+
+            if (event1 == null || event2 == null)
+                return false;
+            
+            var eventTypeAttribute1 = EventTypeAttribute.GetEventTypeFrom(event1);
+            var eventTypeAttribute2 = EventTypeAttribute.GetEventTypeFrom(event1);
+
+            var version1 = Attributes.GetCustomAttributeValue<EventTypeAttribute, int>(event1, attribute => attribute.Version);
+            var version2 = Attributes.GetCustomAttributeValue<EventTypeAttribute, int>(event2, attribute => attribute.Version);
+            
+            return eventTypeAttribute1.Equals(eventTypeAttribute2, StringComparison.InvariantCultureIgnoreCase) &&
+                   version1.Equals(version2);
+        }
+
+        public int GetHashCode(Type eventType)
+        {
+            var eventTypeAttribute = EventTypeAttribute.GetEventTypeFrom(eventType);
+            var version = ((EventTypeAttribute) eventType.GetCustomAttribute(typeof(EventTypeAttribute))).Version;
+
+            var hashCode = eventTypeAttribute.GetHashCode() ^ version;
+            return hashCode.GetHashCode();
+        }
+    }
+    
     public static class EventCollection
     {
-        public static IEnumerable<Type> EventTypes { get; }
+        public static IEnumerable<Type> EventTypes { get; private set; }
 
         static EventCollection()
         {
-            static IEnumerable<(string Name, IEnumerable<int> Version, int Count)> GetDupes(IEnumerable<Type> events)
-                => events.GroupBy(EventTypeAttribute.GetEventTypeFrom)
-                    .Where(group => group.Count() > 1)
-                    .Select(grouping => (
-                        grouping.Key,
-                        grouping.Select(value =>
-                            ((EventTypeAttribute) value.GetCustomAttribute(typeof(EventTypeAttribute))).Version),
-                        grouping.Count()));
+            EventTypes = Enumerable.Empty<Type>();
+        }
+        
+        public static void AddAssemblyTypes(params Assembly[] assemblies)
+        {
+            if (assemblies.IsNullOrEmpty())
+                return;
             
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            var events = loadedAssemblies.Where(assembly => !assembly.IsDynamic).SelectMany(assembly => assembly.GetExportedTypes())
-                .Where(type =>
+            var equalityComparer = new EventSourceEventEqualityComparer();
+            var eventTypes = EventTypes.ToList();
+            
+            var assemblyEvents = assemblies.SelectMany(assembly => assembly.GetExportedTypes()).Where(type =>
                     type.GetCustomAttributes(typeof(EventTypeAttribute), true).Any() &&
                     type.BaseType == typeof(EventSourceEvent))
                 .ToArray();
 
-            var dupes = GetDupes(events).Where(dupe =>
-                    dupe.Count > 1 && dupe.Version.GroupBy(version => version).Any(group => group.Count() > 1))
-                .ToArray();
-            if (dupes.Any())
-                throw new InvalidOperationException(
-                    $"Multiple Event Types with the same version found. {string.Join(", ", dupes.Select(dupe => dupe.Name))}");
+            eventTypes.AddRange(assemblyEvents
+                .Where(assemblyEvent => assemblyEvent != null)
+                .Where(assemblyEvent => !EventTypes.Contains(assemblyEvent, equalityComparer)));
 
-            EventTypes = events;
+            EventTypes = eventTypes;
         }
 
         public static Type? GetEventType(string name, int version)
