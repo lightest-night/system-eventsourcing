@@ -12,6 +12,6 @@ namespace LightestNight.System.EventSourcing.Events
         /// <summary>
         /// The position in the stream this Event takes up
         /// </summary>
-        protected long? Position { get; }
+        public long? Position { get; set; }
     }
 }
