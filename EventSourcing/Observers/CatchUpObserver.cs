@@ -39,8 +39,7 @@ namespace LightestNight.System.EventSourcing.Observers
         }
 
         /// <inheritdoc cref="IEventObserver.EventReceived" />
-        public abstract Task EventReceived(EventSourceEvent @event, long? position = default, int? version = default,
-            CancellationToken cancellationToken = default);
+        public abstract Task EventReceived(EventSourceEvent @event, CancellationToken cancellationToken = default);
 
         public async Task InitialiseObserver(CancellationToken cancellationToken = default)
         {

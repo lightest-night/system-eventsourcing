@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LightestNight.System.EventSourcing.Events;
+using LightestNight.System.EventSourcing.Observers;
 using NotImplementedException = System.NotImplementedException;
 
 namespace LightestNight.System.EventSourcing.Tests.Observers
@@ -22,8 +23,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
         public Task InitialiseObserver(CancellationToken cancellationToken = default)
             => Task.CompletedTask;
 
-        public Task EventReceived(EventSourceEvent evt, long? position = default, int? version = default,
-            CancellationToken cancellationToken = default)
+        public Task EventReceived(EventSourceEvent evt, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

@@ -22,8 +22,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 
         protected override ILogger Logger { get; } = NullLogger.Instance;
 
-        public override Task EventReceived(EventSourceEvent @event, long? position = null, int? version = null,
-            CancellationToken cancellationToken = default)
+        public override Task EventReceived(EventSourceEvent @event, CancellationToken cancellationToken = default)
             => Task.CompletedTask;
     }
     
