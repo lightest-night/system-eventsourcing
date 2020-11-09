@@ -16,14 +16,16 @@ namespace LightestNight.System.EventSourcing.Observers
         private readonly GetGlobalCheckpoint _getGlobalCheckpoint;
 
         private static long? _checkpoint;
-        
-        /// <inheritdoc cref="IEventObserver.IsActive" />
-        public virtual bool IsActive { get; set; }
-        
-        /// <inheritdoc cref="IEventObserver.IsReplaying" />
-        public virtual bool IsReplaying { get; set; }
-        
+
+        /// <summary>
+        /// The name of the checkpoint this Observer uses
+        /// </summary>
         public string CheckpointName => $"checkpoint-{GetType().FullName}";
+        
+        /// <summary>
+        /// The current value of this Observer's checkpoint
+        /// </summary>
+        public long? Checkpoint => _checkpoint;
         
         /// <summary>
         /// <see cref="ILogger" /> instance to output meaningful log messages
@@ -38,23 +40,37 @@ namespace LightestNight.System.EventSourcing.Observers
             _getGlobalCheckpoint = getGlobalCheckpoint ?? throw new ArgumentNullException(nameof(getGlobalCheckpoint));
         }
 
-        /// <inheritdoc cref="IEventObserver.EventReceived" />
-        public abstract Task EventReceived(EventSourceEvent @event, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Processes the <see cref="EventSourceEvent" />
+        /// </summary>
+        /// <param name="event">The <see cref="EventSourceEvent" /> to process</param>
+        /// <param name="cancellationToken">Any <see cref="CancellationToken" /> used to marshall the operation</param>
+        public abstract Task ProcessEvent(EventSourceEvent @event, CancellationToken cancellationToken);
 
+        /// <inheritdoc cref="IEventObserver.InitialiseObserver" />
         public async Task InitialiseObserver(CancellationToken cancellationToken = default)
         {
-            Logger.LogInformation($"{GetType().FullName}.{nameof(InitialiseObserver)} executing...");
+            Logger.LogInformation("{observerType} is initialising...", GetType().FullName);
 
             _checkpoint = await _checkpointManager.GetCheckpoint(CheckpointName, cancellationToken)
                 .ConfigureAwait(false);
-            
             var globalCheckpoint = await _getGlobalCheckpoint(cancellationToken).ConfigureAwait(false);
-            if (globalCheckpoint == _checkpoint)
-                IsActive = true;
-            else await CatchUp(cancellationToken).ConfigureAwait(false);
+
+            if (_checkpoint != globalCheckpoint)
+                await CatchUp(cancellationToken).ConfigureAwait(false);
         }
-        
-        protected Task SetCheckpoint(long? checkpoint, CancellationToken cancellationToken = default)
+
+        /// <inheritdoc cref="IEventObserver.EventReceived" />
+        public virtual async Task EventReceived(EventSourceEvent @event, CancellationToken cancellationToken = default)
+        {
+            Logger.LogDebug("Projector {projector} processing event: {eventType}", GetType().Name,
+                @event.GetType().Name);
+
+            await ProcessEvent(@event, cancellationToken).ConfigureAwait(false);
+            await SetCheckpoint(@event.Position, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected Task SetCheckpoint(long? checkpoint, CancellationToken cancellationToken)
         {
             _checkpoint = checkpoint;
 
@@ -63,7 +79,7 @@ namespace LightestNight.System.EventSourcing.Observers
                 : _checkpointManager.ClearCheckpoint(CheckpointName, cancellationToken);
         }
 
-        private async Task CatchUp(CancellationToken cancellationToken = default)
+        private async Task CatchUp(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
                 return;
@@ -71,17 +87,13 @@ namespace LightestNight.System.EventSourcing.Observers
             var projectionName = GetType().FullName;
             var stopwatch = Stopwatch.StartNew();
 
-            IsReplaying = true;
-            var currentCheckpoint = await _replayManager
-                .ReplayProjectionFrom(_checkpoint, EventReceived, projectionName, cancellationToken)
+            var newCheckpoint = await _replayManager
+                .ReplayProjectionFrom(_checkpoint, ProcessEvent, projectionName, cancellationToken)
                 .ConfigureAwait(false);
-            await SetCheckpoint(currentCheckpoint, cancellationToken).ConfigureAwait(false);
-
-            IsReplaying = false;
-            IsActive = true;
+            await SetCheckpoint(newCheckpoint, cancellationToken).ConfigureAwait(false);
 
             stopwatch.Stop();
-            Logger.LogInformation($"{projectionName} caught up in {stopwatch.ElapsedMilliseconds}ms");
+            Logger.LogInformation("{projectionName} caught up in {ms}ms", projectionName, stopwatch.ElapsedMilliseconds);
         }
     }
 }

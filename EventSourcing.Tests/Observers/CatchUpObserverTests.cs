@@ -22,7 +22,7 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 
         protected override ILogger Logger { get; } = NullLogger.Instance;
 
-        public override Task EventReceived(EventSourceEvent @event, CancellationToken cancellationToken = default)
+        public override Task ProcessEvent(EventSourceEvent @event, CancellationToken cancellationToken = default)
             => Task.CompletedTask;
     }
     
@@ -35,32 +35,28 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 
         public CatchUpObserverTests()
         {
+            _replayManagerMock.Setup(replayManager =>
+                    replayManager.ReplayProjectionFrom(It.IsAny<long?>(), _sut.ProcessEvent, It.IsAny<string>(),
+                        CancellationToken.None))
+                .ReturnsAsync(Checkpoint);
+            
             _sut = new TestCatchUpObserver(_checkpointManagerMock.Object, _replayManagerMock.Object,
                 cancellationToken => Task.FromResult((long?) Checkpoint));
-            
-            _checkpointManagerMock
-                .Setup(checkpointManager => checkpointManager.GetCheckpoint(_sut.CheckpointName, CancellationToken.None))
-                .ReturnsAsync(Checkpoint);
-        }
-        
-        [Fact]
-        public async Task ShouldSetActiveToTrueIfCheckpointsAreEqual()
-        {
-            // Act
-            await _sut.InitialiseObserver(CancellationToken.None);
-            
-            // Allow a pause due to the asynchronous nature of setting checkpoints
-            await Task.Delay(50);
-            
-            // Assert
-            _sut.IsActive.ShouldBeTrue();
         }
 
         [Fact]
-        public void ShouldSetActiveToFalseIfCheckpointsAreNotEqual()
-        { 
+        public async Task Should_Ask_For_Replay_If_Checkpoints_Are_Not_Equal()
+        {
+            // Arrange
+            _checkpointManagerMock
+                .Setup(checkpointManager => checkpointManager.GetCheckpoint(_sut.CheckpointName, CancellationToken.None))
+                .ReturnsAsync(Checkpoint - 50);
+            
+            // Act
+            await _sut.InitialiseObserver(CancellationToken.None);
+            
             // Assert
-            _sut.IsActive.ShouldBeFalse();
+            _sut.Checkpoint.ShouldBe(Checkpoint);
         }
     }
 }
