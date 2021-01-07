@@ -12,8 +12,9 @@ namespace LightestNight.System.EventSourcing.Persistence
         /// <param name="id">The Globally Unique Identifier of the <see cref="IEventSourceAggregate" /> object</param>
         /// <param name="cancellationToken">Any <see cref="CancellationToken" /> needed to marshal the operation</param>
         /// <typeparam name="TAggregate">The type of the <see cref="IEventSourceAggregate" /> to retrieve</typeparam>
+        /// <typeparam name="TId">The type of the Aggregate identifier</typeparam>
         /// <returns>A populated instance of <see cref="IEventSourceAggregate" /></returns>
-        Task<TAggregate> GetById<TAggregate>(object id, CancellationToken cancellationToken = default)
+        Task<TAggregate> GetById<TAggregate, TId>(TId id, CancellationToken cancellationToken = default)
             where TAggregate : class, IEventSourceAggregate;
 
         /// <summary>

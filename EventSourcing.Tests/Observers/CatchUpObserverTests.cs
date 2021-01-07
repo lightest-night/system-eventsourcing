@@ -35,13 +35,13 @@ namespace LightestNight.System.EventSourcing.Tests.Observers
 
         public CatchUpObserverTests()
         {
+            _sut = new TestCatchUpObserver(_checkpointManagerMock.Object, _replayManagerMock.Object,
+                _ => Task.FromResult((long?) Checkpoint));
+            
             _replayManagerMock.Setup(replayManager =>
                     replayManager.ReplayProjectionFrom(It.IsAny<long?>(), _sut.ProcessEvent, It.IsAny<string>(),
                         CancellationToken.None))
                 .ReturnsAsync(Checkpoint);
-            
-            _sut = new TestCatchUpObserver(_checkpointManagerMock.Object, _replayManagerMock.Object,
-                cancellationToken => Task.FromResult((long?) Checkpoint));
         }
 
         [Fact]
