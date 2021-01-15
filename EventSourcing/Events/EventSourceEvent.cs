@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 
 namespace LightestNight.System.EventSourcing.Events
 {
@@ -13,5 +14,11 @@ namespace LightestNight.System.EventSourcing.Events
         /// The position in the stream this Event takes up
         /// </summary>
         public long? Position { get; set; }
+        
+        public virtual byte[] Serialize(Type eventType, JsonSerializerOptions? options)
+            => JsonSerializer.SerializeToUtf8Bytes(this, eventType, options);
+        
+        public virtual object? Deserialize(byte[] value, Type eventType, JsonSerializerOptions? options)
+            => JsonSerializer.Deserialize(value, eventType, options);
     }
 }
