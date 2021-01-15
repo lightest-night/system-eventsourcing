@@ -15,10 +15,10 @@ namespace LightestNight.System.EventSourcing.Events
         /// </summary>
         public long? Position { get; set; }
         
-        public virtual byte[] Serialize(Type eventType, JsonSerializerOptions? options)
+        public virtual byte[] Serialize(Type eventType, JsonSerializerOptions? options = null)
             => JsonSerializer.SerializeToUtf8Bytes(this, eventType, options);
         
-        public virtual object? Deserialize(byte[] value, Type eventType, JsonSerializerOptions? options)
+        public virtual object? Deserialize(byte[] value, Type eventType, JsonSerializerOptions? options = null)
             => JsonSerializer.Deserialize(value, eventType, options);
     }
 }
