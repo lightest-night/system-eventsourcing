@@ -9,7 +9,7 @@ namespace LightestNight.System.EventSourcing.Events
 {
     internal class EventSourceEventEqualityComparer : IEqualityComparer<Type>
     {
-        public bool Equals(Type event1, Type event2)
+        public bool Equals(Type? event1, Type? event2)
         {
             if (event1 == null && event2 == null)
                 return true;
@@ -30,7 +30,8 @@ namespace LightestNight.System.EventSourcing.Events
         public int GetHashCode(Type eventType)
         {
             var eventTypeAttribute = EventTypeAttribute.GetEventTypeFrom(eventType);
-            var version = ((EventTypeAttribute) eventType.GetCustomAttribute(typeof(EventTypeAttribute))).Version;
+            var attribute = eventType.GetCustomAttribute(typeof(EventTypeAttribute)) as EventTypeAttribute;
+            var version = attribute?.Version ?? -1;
 
             var hashCode = eventTypeAttribute.GetHashCode() ^ version;
             return hashCode.GetHashCode();

@@ -9,7 +9,7 @@ namespace LightestNight.System.EventSourcing.Dispatch
 {
     public static class RedirectToWhen
     {
-        private static readonly MethodInfo InternalPreserveStackTraceMethod =
+        private static readonly MethodInfo? InternalPreserveStackTraceMethod =
             typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 
         private static class Cache<T>
@@ -35,8 +35,8 @@ namespace LightestNight.System.EventSourcing.Dispatch
             bool TryGetMethod(Type key, out MethodInfo? methodInfo)
             {
                 var cacheType = typeof(Cache<>);
-                var constructed = cacheType.MakeGenericType(instance?.GetType());
-
+                var constructed = cacheType.MakeGenericType(instance!.GetType());
+                
                 methodInfo = null;
                 return constructed
                            .GetFields()
@@ -56,8 +56,7 @@ namespace LightestNight.System.EventSourcing.Dispatch
             }
             catch (TargetInvocationException ex)
             {
-                if (InternalPreserveStackTraceMethod != null)
-                    InternalPreserveStackTraceMethod.Invoke(ex.InnerException, Array.Empty<object>());
+                InternalPreserveStackTraceMethod?.Invoke(ex.InnerException, Array.Empty<object>());
 
                 throw ex.InnerException ?? ex;
             }
