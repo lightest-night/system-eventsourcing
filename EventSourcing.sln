@@ -14,6 +14,7 @@ ProjectSection(SolutionItems) = preProject
 	GitVersion.yml = GitVersion.yml
 	.github\workflows\CI.yml = .github\workflows\CI.yml
 	.github\workflows\Release.yml = .github\workflows\Release.yml
+	.github\workflows\Artifact Cleanup.yml = .github\workflows\Artifact Cleanup.yml
 EndProjectSection
 EndProject
 Global
