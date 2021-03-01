@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace LightestNight.System.EventSourcing.Events
+namespace LightestNight.EventSourcing.Events
 {
     /// <summary>
     /// When an Event is received this function is the one that is invoked to process the event.

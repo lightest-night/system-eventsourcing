@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using LightestNight.System.Utilities.Extensions;
 
-namespace LightestNight.System.EventSourcing.Dispatch
+namespace LightestNight.EventSourcing.Dispatch
 {
     public static class RedirectToWhen
     {

@@ -5,7 +5,7 @@ using System.Reflection;
 using LightestNight.System.Utilities;
 using LightestNight.System.Utilities.Extensions;
 
-namespace LightestNight.System.EventSourcing.Events
+namespace LightestNight.EventSourcing.Events
 {
     internal class EventSourceEventEqualityComparer : IEqualityComparer<Type>
     {

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AssemblyName>LightestNight.System.EventSourcing</AssemblyName>
-        <RootNamespace>LightestNight.System.EventSourcing</RootNamespace>
+        <AssemblyName>LightestNight.EventSourcing</AssemblyName>
+        <RootNamespace>LightestNight.EventSourcing</RootNamespace>
         <LangVersion>default</LangVersion>
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
@@ -10,10 +10,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>LightestNight.System.EventSourcing</PackageId>
+        <PackageId>LightestNight.EventSourcing</PackageId>
         <Authors>James Woodley</Authors>
         <Company>LightestNight Ltd</Company>
-        <Title>LightestNight :: System :: Event Sourcing</Title>
+        <Title>LightestNight :: Event Sourcing</Title>
         <Description>Core elements to enable Event Sourcing paradigms</Description>
         <PackageTags>lightestnight;system;infrastructure;event;event sourcing;domain driven design;cqrs</PackageTags>
         <Version>1.0.0</Version>
@@ -22,7 +22,7 @@
         <FileVersion>1.0.0</FileVersion>
         <InformationalVersion>1.0.0</InformationalVersion>
         <PackageIcon>icon.jpeg</PackageIcon>
-        <RepositoryUrl>https://github.com/lightestnight/system.eventsourcing</RepositoryUrl>
+        <RepositoryUrl>https://github.com/lightestnight/eventsourcing</RepositoryUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LightestNight.System.EventSourcing.Events;
-using LightestNight.System.EventSourcing.Observers;
+using LightestNight.EventSourcing.Events;
+using LightestNight.EventSourcing.Observers;
 
 namespace LightestNight.System.EventSourcing.Tests.Observers
 {

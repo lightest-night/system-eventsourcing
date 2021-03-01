@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using LightestNight.System.EventSourcing.Events;
+using LightestNight.EventSourcing.Events;
 
-namespace LightestNight.System.EventSourcing.Replay
+namespace LightestNight.EventSourcing.Replay
 {
     public interface IReplayManager
     {

@@ -1,4 +1,4 @@
-using LightestNight.System.EventSourcing.Dispatch;
+using LightestNight.EventSourcing.Dispatch;
 using Shouldly;
 using Xunit;
 

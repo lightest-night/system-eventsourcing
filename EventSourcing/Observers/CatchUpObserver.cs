@@ -2,12 +2,12 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using LightestNight.System.EventSourcing.Checkpoints;
-using LightestNight.System.EventSourcing.Events;
-using LightestNight.System.EventSourcing.Replay;
+using LightestNight.EventSourcing.Checkpoints;
+using LightestNight.EventSourcing.Events;
+using LightestNight.EventSourcing.Replay;
 using Microsoft.Extensions.Logging;
 
-namespace LightestNight.System.EventSourcing.Observers
+namespace LightestNight.EventSourcing.Observers
 {
     public abstract class CatchUpObserver : IEventObserver
     {

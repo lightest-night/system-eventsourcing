@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using LightestNight.System.EventSourcing.Dispatch;
-using LightestNight.System.EventSourcing.Events;
+using LightestNight.EventSourcing.Dispatch;
+using LightestNight.EventSourcing.Events;
 using LightestNight.System.Utilities.Extensions;
 
 // ReSharper disable MemberCanBeProtected.Global
 
-namespace LightestNight.System.EventSourcing.Domain
+namespace LightestNight.EventSourcing.Domain
 {
     public abstract class EventSourceAggregate : IEventSourceAggregate
     {

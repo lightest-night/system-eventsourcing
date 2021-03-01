@@ -5,9 +5,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <AssemblyName>LightestNight.System.EventSourcing.Tests</AssemblyName>
+        <AssemblyName>LightestNight.EventSourcing.Tests</AssemblyName>
 
-        <RootNamespace>LightestNight.System.EventSourcing.Tests</RootNamespace>
+        <RootNamespace>LightestNight.EventSourcing.Tests</RootNamespace>
 
         <LangVersion>default</LangVersion>
 

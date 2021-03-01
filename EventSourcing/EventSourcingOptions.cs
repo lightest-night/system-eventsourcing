@@ -1,4 +1,4 @@
-﻿namespace LightestNight.System.EventSourcing
+﻿namespace LightestNight.EventSourcing
 {
     public class EventSourcingOptions
     {

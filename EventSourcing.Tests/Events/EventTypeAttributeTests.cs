@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using LightestNight.System.EventSourcing.Events;
+using LightestNight.EventSourcing.Events;
 using Shouldly;
 using Xunit;
 

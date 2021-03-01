@@ -2,7 +2,7 @@
 using System.Reflection;
 using LightestNight.System.Utilities.Extensions;
 
-namespace LightestNight.System.EventSourcing.Events
+namespace LightestNight.EventSourcing.Events
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class EventTypeAttribute : Attribute

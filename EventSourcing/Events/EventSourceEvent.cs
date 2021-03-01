@@ -1,6 +1,6 @@
 using System;
 
-namespace LightestNight.System.EventSourcing.Events
+namespace LightestNight.EventSourcing.Events
 {
     public abstract class EventSourceEvent
     {

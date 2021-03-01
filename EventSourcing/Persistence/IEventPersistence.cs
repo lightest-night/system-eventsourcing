@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using LightestNight.System.EventSourcing.Domain;
+using LightestNight.EventSourcing.Domain;
 
-namespace LightestNight.System.EventSourcing.Persistence
+namespace LightestNight.EventSourcing.Persistence
 {
     public interface IEventPersistence
     {

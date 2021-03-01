@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace LightestNight.System.EventSourcing.Checkpoints
+namespace LightestNight.EventSourcing.Checkpoints
 {
     public interface ICheckpointManager
     {

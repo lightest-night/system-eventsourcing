@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using LightestNight.System.EventSourcing.Events;
+using LightestNight.EventSourcing.Events;
 
-namespace LightestNight.System.EventSourcing.Domain
+namespace LightestNight.EventSourcing.Domain
 {
     public interface IEventSourceAggregate
     {

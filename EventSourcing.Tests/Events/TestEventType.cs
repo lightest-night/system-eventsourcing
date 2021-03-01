@@ -1,5 +1,5 @@
 ﻿using System;
-using LightestNight.System.EventSourcing.Events;
+using LightestNight.EventSourcing.Events;
 
 namespace LightestNight.System.EventSourcing.Tests.Events
 {

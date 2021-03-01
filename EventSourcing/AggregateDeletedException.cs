@@ -1,7 +1,7 @@
 ﻿using System;
-using LightestNight.System.EventSourcing.Domain;
+using LightestNight.EventSourcing.Domain;
 
-namespace LightestNight.System.EventSourcing
+namespace LightestNight.EventSourcing
 {
     public class AggregateDeletedException : Exception
     {

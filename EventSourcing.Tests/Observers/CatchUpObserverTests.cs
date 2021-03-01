@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using LightestNight.System.EventSourcing.Checkpoints;
-using LightestNight.System.EventSourcing.Events;
-using LightestNight.System.EventSourcing.Observers;
-using LightestNight.System.EventSourcing.Replay;
+using LightestNight.EventSourcing.Checkpoints;
+using LightestNight.EventSourcing.Events;
+using LightestNight.EventSourcing.Observers;
+using LightestNight.EventSourcing.Replay;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
