@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.EventSourcing.Events
 {
@@ -32,7 +31,7 @@ namespace LightestNight.EventSourcing.Events
 
         public static string GetEventTypeFrom(Type classType)
         {
-            classType.ThrowIfNull(nameof(classType));
+            if (classType == null) throw new ArgumentNullException(nameof(classType));
             
             var attribute = classType.GetCustomAttribute<EventTypeAttribute>();
             if (attribute != null && !string.IsNullOrEmpty(attribute.EventType))

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using LightestNight.EventSourcing.Dispatch;
 using LightestNight.EventSourcing.Events;
-using LightestNight.System.Utilities.Extensions;
 
 // ReSharper disable MemberCanBeProtected.Global
 
@@ -10,7 +9,7 @@ namespace LightestNight.EventSourcing.Domain
 {
     public abstract class EventSourceAggregate : IEventSourceAggregate
     {
-        private readonly List<EventSourceEvent> _uncommittedEvents = new List<EventSourceEvent>();
+        private readonly List<EventSourceEvent> _uncommittedEvents = new();
 
         /// <inheritdoc cref="IEventSourceAggregate.Id" />
         public object Id { get; set; } = default!;
@@ -38,7 +37,7 @@ namespace LightestNight.EventSourcing.Domain
         {
             var enumeratedEvents = events as EventSourceEvent[] ?? events.ToArray();
             
-            if (enumeratedEvents.IsNullOrEmpty())
+            if (!enumeratedEvents.Any())
                 return;
             
             foreach (var @event in enumeratedEvents)

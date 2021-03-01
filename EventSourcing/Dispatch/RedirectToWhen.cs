@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using LightestNight.System.Utilities.Extensions;
 
 namespace LightestNight.EventSourcing.Dispatch
 {
@@ -29,8 +28,7 @@ namespace LightestNight.EventSourcing.Dispatch
         [DebuggerNonUserCode]
         public static void InvokeEventOptional<T>(T instance, object evt)
         {
-            instance.ThrowIfNull(nameof(instance));
-            evt.ThrowIfNull(nameof(evt));
+            if (instance == null) throw new ArgumentNullException(nameof(instance));
             
             bool TryGetMethod(Type key, out MethodInfo? methodInfo)
             {

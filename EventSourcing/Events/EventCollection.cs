@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using LightestNight.System.Utilities;
-using LightestNight.System.Utilities.Extensions;
+using LightestNight.Utilities;
+using LightestNight.Utilities.Extensions;
 
 namespace LightestNight.EventSourcing.Events
 {
